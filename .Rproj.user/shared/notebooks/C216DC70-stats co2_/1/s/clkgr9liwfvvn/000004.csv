@@ -1,0 +1,2 @@
+"0","  "
+"0","ggsave(""figures/CO2 emission.png"", plot= pl, width = 9, height = 7, dpi = 600)# export plot high resolution"

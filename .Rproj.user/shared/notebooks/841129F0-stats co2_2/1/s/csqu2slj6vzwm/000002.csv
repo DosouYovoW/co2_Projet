@@ -1,0 +1,15 @@
+"0","library(plotly)"
+"0","ggplotly(  "
+"0","data_co2 |>"
+"0","  ggplot() +"
+"0","  geom_histogram(aes(x = log10(`CO2 emission (ug/h/g)`)), bins = 100)"
+"0",")"
+"2","Warning in FUN(X[[i]], ...) :"
+"2"," NaNs produced
+"
+"2","Warning in FUN(X[[i]], ...) :"
+"2"," NaNs produced
+"
+"2","Warning:"
+"2"," Removed 37 rows containing non-finite values (stat_bin).
+"

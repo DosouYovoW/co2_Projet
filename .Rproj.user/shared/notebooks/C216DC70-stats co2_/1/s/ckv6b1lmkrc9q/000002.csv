@@ -1,0 +1,4 @@
+"0","models_co2 <- data_co2 %>%"
+"0","  group_by(`Depth (cm)`) %>%"
+"0","  summarise(linmod = list(lm(lnK ~ `1/T`)))"
+"0","models_co2"

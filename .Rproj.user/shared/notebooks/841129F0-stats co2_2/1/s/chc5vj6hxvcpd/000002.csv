@@ -1,0 +1,23 @@
+"0","container_volume <- 250 # mL"
+"0","gas_constant <- 8.31446 # unit"
+"0","atm_pressure_n <- 101.325"
+"0",""
+"0","data_co2 <- data_co2 %>%"
+"0","  mutate(`Temperature (K)` = `Temperature (°C)` + 273,"
+"0","         `Total carbon (Mg/ha)` = `Bulk density (g/cm3)` * `Carbone(%)` * 10,"
+"0","         `Molar Volume (L/mol)` = gas_constant * `Temperature (K)` / atm_pressure_n,"
+"0","         `Headspace Volume (mL)` = container_volume - (`Soil weight (g)` / `Bulk density (g/cm3)`), # 250 mL is the volume of the container"
+"0","         `Dry soil weight (g)` = `Soil weight (g)` - (`Soil weight (g)` * `Water content (%)` / 100),"
+"0","         `CO2 emission (ug/h/g)` = (`Final CO2 (ppm)` - `Initial CO2 (ppm)`) * 0.000001 * 44000000 /"
+"0","                                   `Molar Volume (L/mol)` * (`Headspace Volume (mL)` / 1000) * (12 / 44) /"
+"0","                                   `Time final (h)` / `Dry soil weight (g)`,"
+"0","         `CO2 emission (mg/kg)` = `CO2 emission (ug/h/g)` * 24 * `Time (days)`,"
+"0","         `CO2 emission (Mg/ha)` = `CO2 emission (mg/kg)` * `Bulk density (g/cm3)` * 10 * 0.0001,"
+"0","         K = log(`Total carbon (Mg/ha)` / (`Total carbon (Mg/ha)` - `CO2 emission (Mg/ha)`)) / `Time (days)`,"
+"0","         lnK = log(K),"
+"0","         `1/T` = 1 / `Temperature (K)`)"
+"2","Warning:"
+"2"," Problem with `mutate()` column `lnK`.
+[34mℹ[39m `lnK = log(K)`.
+[34mℹ[39m NaNs produced
+"

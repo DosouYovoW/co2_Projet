@@ -1,0 +1,14 @@
+"0","data_co2_clean |>"
+"0","  select(`Time (days)`, `Depth (cm)`, `Temperature (°C)`, `CO2 emission (ug/h/g)`) |>"
+"0","  corrr::correlate() |>"
+"0","  corrr::focus(`CO2 emission (ug/h/g)`) |>"
+"0","  mutate(term = fct_reorder(term, `CO2 emission (ug/h/g)`)) |>"
+"0","  ggplot(aes(x = `CO2 emission (ug/h/g)`, y= term)) +"
+"0","  geom_col(width = 0.2) +"
+"0","  labs(x = bquote(~CO[2]~ 'emision ('*mu~'g'~ h^-1~g^-1*')')) +"
+"0","  theme_bw()"
+"2","
+Correlation method: 'pearson'
+Missing treated using: 'pairwise.complete.obs'
+
+"

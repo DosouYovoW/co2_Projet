@@ -1,0 +1,4 @@
+"0","data_Q10$Log_Q10 <- log10(data_Q10$Q10)"
+"0",""
+"0","Q10_lm <- lm(log(Q10) ~ `Depth (cm)`,"
+"0","                     data = data_Q10) "
