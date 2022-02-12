@@ -1,0 +1,11 @@
+"0","options(repr.plot.width = 8, repr.plot.height = 4)"
+"0","data_Q10$`Layers` <- as.character(data_Q10$`Depth (cm)`)"
+"0","ggplot(data=data_Q10, aes(x = `Time (days)`, y = `Q10`)) +"
+"0","facet_grid(.~`Depth (cm)`, labeller = labeller(`Depth (cm)` = New.labs_b)) +"
+"0","geom_smooth(method = ""lm"", se = TRUE, color = ""Black"") +"
+"0","geom_point(size = 1.5, alpha = 0.5) +"
+"0","theme_bw() + "
+"0","theme(strip.text = element_text(face = ""bold""), axis.text=element_text(face = ""bold""),"
+"0","        axis.title=element_text(face = ""bold"")) "
+"2","`geom_smooth()` using formula 'y ~ x'
+"
