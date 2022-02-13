@@ -24,9 +24,11 @@ rmd_co2 <- "/Users/wilfrieddossou-yovo/Dropbox/DOCTORAT/THÈSE/TEA BAG DONNEES/
 ```
 
 ```{r}
-rmd_co2 <- "/Users/wilfrieddossou-yovo/Dropbox/DOCTORAT/THÈSE/TEA BAG DONNEES/co2_Projet/stats co2.rmd"
-notbook_co2 <- "/Users/wilfrieddossou-yovo/Dropbox/DOCTORAT/THÈSE/TEA BAG DONNEES/co2_Projet/stas co2.ipynb"
-rmarkdown:::convert_ipynb(input = rmd_co2, output = notbook_co2 )
+devtools::install_github("mkearney/rmd2jupyter")
+library(rmd2jupyter)
+```
+```{r}
+rmd2jupyter("/Users/wilfrieddossou-yovo/Dropbox/DOCTORAT/THÈSE/TEA BAG DONNEES/co2_Projet/stats co2.Rmd")
 ```
 
 

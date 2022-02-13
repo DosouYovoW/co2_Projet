@@ -105,7 +105,7 @@ data_co2_clean <- data_co2 |>
   drop_na()
 ```
 
-Now data are well distributed
+Now data look well distributed
 ```{r}
 ggplotly(  
 data_co2_clean |>
