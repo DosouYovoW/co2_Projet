@@ -1,4 +1,0 @@
-"0","mean_sd_CoverN <- ddply(data_carbon_credit, ~ `Layer (cm)`,"
-"0","                       summarise, mean_CoverN = mean(`C:N ratio`, na.rm = TRUE), "
-"0","                        se_CoverN = sd(`C:N ratio`, na.rm = TRUE)/sqrt(length(!is.na(`C:N ratio`))))"
-"0","mean_sd_CoverN"

@@ -1,0 +1,43 @@
+"0","library(plotly)"
+"2","Registered S3 method overwritten by 'htmlwidgets':
+  method           from         
+  print.htmlwidget tools:rstudio
+"
+"2","
+Attaching package: ‘plotly’
+
+"
+"2","The following object is masked from ‘package:ggplot2’:
+
+    last_plot
+
+"
+"2","The following objects are masked from ‘package:plyr’:
+
+    arrange, mutate, rename, summarise
+
+"
+"2","The following object is masked from ‘package:stats’:
+
+    filter
+
+"
+"2","The following object is masked from ‘package:graphics’:
+
+    layout
+
+"
+"0","ggplotly(  "
+"0","data_co2 |>"
+"0","  ggplot() +"
+"0","  geom_histogram(aes(x = log10(`CO2 emission (ug/h/g)`)), bins = 100)"
+"0",")"
+"2","Warning in FUN(X[[i]], ...) :"
+"2"," NaNs produced
+"
+"2","Warning in FUN(X[[i]], ...) :"
+"2"," NaNs produced
+"
+"2","Warning:"
+"2"," Removed 37 rows containing non-finite values (stat_bin).
+"

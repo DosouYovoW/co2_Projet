@@ -1,7 +1,0 @@
-"0","options(repr.plot.width = 6, repr.plot.height = 7)"
-"0","pg <- ggplot(data=data_co2_clean, aes(x = `Time (days)`,y = `CO2 emission (ug/h/g)` )) +"
-"0","geom_boxplot(aes(group = factor(`Time (days)`))) + "
-"0","facet_grid(`Depth (cm)` ~ `Temperature (°C)`,   scales = ""free"", "
-"0","          labeller = labeller(`Depth (cm)` = New.labs_b, `Temperature (°C)` = New.labs))+ "
-"0"," labs(x = ""Incubation time (days)"", y = bquote(~CO[2]~ 'emision ('*mu~'g'~ h^-1~g^-1*')'))"
-"0","pg "

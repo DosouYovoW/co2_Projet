@@ -1,6 +1,0 @@
-"0","Activation_energy <- tibble("
-"0","    Soil_layers = c(""10"", ""20"", ""30""),"
-"0","    intercept = NA,"
-"0","    slope = NA,"
-"0","    adj_r_sq = NA"
-"0",")"

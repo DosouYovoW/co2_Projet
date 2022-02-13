@@ -1,4 +1,0 @@
-"0","rmse <-  data_co2_preprocessed |>"
-"0","  bind_cols(prediction) |>"
-"0","  rmse(`CO2 emission (ug/h/g)`, .pred)"
-"0","rmse"

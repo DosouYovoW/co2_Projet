@@ -1,6 +1,0 @@
-"0","linmod_coef <- list()"
-"0","for (i in seq_along(models_co2$linmod)) linmod_coef[[i]] <- models_co2$linmod[[i]]$coefficients"
-"0","linmod_coef <- do.call(rbind.data.frame, linmod_coef)"
-"0","names(linmod_coef) <- c(""Intercept"", ""Slope"")"
-"0","linmod_coef <- bind_cols(unique(data_co2[""Depth (cm)""]), linmod_coef)"
-"0","linmod_coef"

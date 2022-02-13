@@ -1,5 +1,0 @@
-"0","R = 8.3144621 / 1000 # Gas constant Kj/mol/K "
-"0","Activation_energy <-  Activation_energy %>%"
-"0","  mutate(Ea = -slope * R) %>%"
-"0","  select(Soil_layers, adj_r_sq, Ea)"
-"0","Activation_energy"

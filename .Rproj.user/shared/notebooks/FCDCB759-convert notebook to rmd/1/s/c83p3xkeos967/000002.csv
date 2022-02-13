@@ -1,0 +1,8 @@
+"0","devtools::install_github(""mkearney/rmd2jupyter"") "
+"2","Skipping install of 'rmd2jupyter' from a github remote, the SHA1 (d2bd2aad) has not changed since last install.
+  Use `force = TRUE` to force installation
+"
+"0","library(rmd2jupyter)"
+"0","rmd2jupyter(""/Users/wilfrieddossou-yovo/Dropbox/DOCTORAT/THÈSE/TEA BAG DONNEES/co2_Projet/stats_co2.Rmd"")"
+"2","file saved as /Users/wilfrieddossou-yovo/Dropbox/DOCTORAT/THÈSE/TEA BAG DONNEES/co2_Projet/stats_co2.ipynb
+"

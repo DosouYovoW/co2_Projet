@@ -1,7 +1,0 @@
-"0","K_median <- aggregate(K ~ `Depth (cm)` + `Temperature (°C)`, data = data_co2_clean, FUN = mean)"
-"0","K_median_01 <- K_median %>%"
-"0","  pivot_wider(names_from = `Temperature (°C)`, values_from = K)"
-"0",""
-"0","K_median_01$Q_20_10 <- K_median_01$`20` / K_median_01$`10`"
-"0","K_median_01$Q_30_20 <- K_median_01$`30` / K_median_01$`20`"
-"0","K_median_01"

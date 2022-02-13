@@ -1,5 +1,0 @@
-"0","par(mfrow=c(2,2)) # plot all 4 plots in one"
-"0",""
-"0","plot(model_fit$fit, "
-"0","     pch = 16,    "
-"0","     col = '#006EA1')"

@@ -1,2 +1,0 @@
-"0","model_fit <- model_spec |>"
-"0","  fit(`CO2 emission (ug/h/g)` ~ ., data_co2_preprocessed)"
