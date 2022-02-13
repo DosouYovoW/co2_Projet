@@ -1,8 +1,8 @@
 ---
-title: "R Notebook"
-output:
-  html_notebook: default
-  pdf_document: default
+title: "Untitled"
+author: "wilfried"
+date: "13/02/2022"
+output: html_document
 ---
 
 # Temperature sensitivity of CO2 emissions in layered cranberry soils
@@ -104,7 +104,7 @@ data_co2_clean <- data_co2 |>
   drop_na()
 ```
 
-Now data are well distributed
+Now data look well distributed
 ```{r}
 ggplotly(  
 data_co2_clean |>

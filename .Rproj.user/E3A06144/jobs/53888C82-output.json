@@ -1,6 +1,0 @@
-[1,"Installing 'Metrics' ...\n"]
-[2,"trying URL 'https://cran.rstudio.com/bin/macosx/contrib/4.1/Metrics_0.1.4.tgz'\n"]
-[2,"Content type 'application/x-gzip' length 81834 bytes (79 KB)\n======================="]
-[1,"The downloaded binary packages are in\n"]
-[1,"\t/var/folders/9q/7cjjj_nj12l896f06bdg0mp40000gn/T//RtmpnG0yOf/downloaded_packages\n"]
-[2,"===========================\ndownloaded 79 KB\n\n\n\n✔ Package 'Metrics' successfully installed.\n"]
