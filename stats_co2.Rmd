@@ -1,5 +1,5 @@
 ---
-title: "Sensitivity of CO2 emission rate to temperature in cranberry soils"
+title: "CO2 emissions in layered cranberry soils under simulated warming"
 author: "Dr.Wilfried Dossou-Yovo"
 date: "13/02/2022"
 output:
@@ -7,6 +7,8 @@ output:
   pdf_document: default
   word_document: default
 ---
+CO2 Emissions in Layered Cranberry Soils under 
+Simulated Warming
 
 *Wilfried Dossou-Yovo, Serge Étienne Parent,Noura Ziadi, Bertrand Normand, and Léon Étienne parent*
 
