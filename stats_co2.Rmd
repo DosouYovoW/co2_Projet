@@ -1,15 +1,22 @@
 ---
-title: "Untitled"
-author: "wilfried"
+title: "Sensitivity of CO2 emission rate to temperature in cranberry soils"
+author: "Dr.Wilfried Dossou-Yovo"
 date: "13/02/2022"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
 ---
 
-# Sensitivity of CO2 emission rate to temperature in cranberry soils 
 *Wilfried Dossou-Yovo, Serge Étienne Parent,Noura Ziadi, Bertrand Normand, and Léon Étienne parent*
 
 ```{r}
 print(Sys.Date())
+
+
+a <- list(10, TRUE, 5.6)
+
+ls(pat = "^V")
 ```
 
 ## 1. Objective
@@ -27,7 +34,7 @@ In addition to data exploration, this notebook will answer the following statist
 
 We need package [tidyverse](https://www.tidyverse.org/) which loads a set of packages for easy data manipulation(Ex: [dplyr](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8)) and visualization (ex: [ggplot2](https://www.rdocumentation.org/packages/ggplot2/versions/3.2.1)). We also use [ggpubr](https://www.rdocumentation.org/packages/ggpubr/versions/0.1.1) to customise publication ready plot, [ggpmisc](https://www.rdocumentation.org/packages/ggpmisc/versions/0.2.17) and [grid](https://www.rdocumentation.org/packages/grid/versions/3.6.2) are useful packages as extensions to [ggplot2](https://www.rdocumentation.org/packages/ggplot2/versions/3.2.1).
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 #install.packages(c("ggpubr", "tidyverse", "tidymodels", "plotly"))
 library(tidyverse)
 library(tidymodels)
@@ -40,7 +47,8 @@ library(plotly)
 We load two data `data_pot` and `data_co2` involved in our anylisis. `data_pot` contained details about sites sampling, soil sampling(soil depth, weight, water content and bulk density), laboratory incubation temperature while `data_co2` contained details about laboratory incubation time, co2 emission and jar masson details.
 `data_co2` was combined with `data_pot` with `left_join` function
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(flextable)
 data_pots <- read_csv2('data/pots.csv')
 data_co2 <- read_csv('data/co2.csv')
 data_co2 <- data_co2 |>
@@ -52,7 +60,7 @@ data_pots
 
 Several variables have been added to our data in order to proceed for analysis. The added variables are the following: `Temperature (Kelvin)`, `Molar Volume (L/mol)`, `Headspace Volume (mL)`, `Dry soil weight (g)`, `CO2 emission (ug/h/g)`, `CO2 emission (mg/kg)`, `decomposition rate K`, `lnK`and `1/T(T = Temperature(Kelvin)`
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 container_volume <- 250 # mL
 gas_constant <- 8.31446 # unit
 atm_pressure_n <- 101.325
@@ -71,6 +79,8 @@ data_co2 <- data_co2 %>%
          K = log(`Total carbon (Mg/ha)` / (`Total carbon (Mg/ha)` - `CO2 emission (Mg/ha)`)) / `Time (days)`,
          lnK = log(K),
          `1/T` = 1 / `Temperature (K)`)
+
+#write_xlsx(data_co2, "data/data_co2_leon.xlsx")
 ```
 
 ## 6. Exploratory data analysis
@@ -146,14 +156,15 @@ ggsave("figures/Boxplot.png", width = 6, height = 7, dpi = 600)# export plot hig
 
 ```{r}
 model_rec <-  data_co2_clean |>
-  recipe(`CO2 emission (ug/h/g)` ~ ., data_co2) |>
-  step_select(`CO2 emission (ug/h/g)`, `Time (days)`, `Depth (cm)`, `Temperature (°C)`) |>
+  recipe(`CO2 emission (ug/h/g)` ~ ., data_co2) |> 
+  step_select(`CO2 emission (ug/h/g)`, `Time (days)`, Sites, 
+              `Depth (cm)`, `Temperature (°C)`) |>
   step_log(all_outcomes(), base = 10) |>
+  step_dummy(Sites) |>
   step_normalize(all_numeric(), -all_outcomes() ) |>
   prep()
 
 data_co2_preprocessed <-  juice(model_rec)
-
 model_spec <- linear_reg() |>
   set_engine("lm")
 ```
@@ -161,7 +172,7 @@ model_spec <- linear_reg() |>
 #### Fit model
 ```{r}
 model_fit <- model_spec |>
-  fit(`CO2 emission (ug/h/g)` ~ ., data_co2_preprocessed)
+  fit(`CO2 emission (ug/h/g)` ~ ., data_co2_preprocessed) 
 ```
 
 
@@ -216,12 +227,14 @@ px <- data_co2_preprocessed |>
              vjust = 1, hjust = 0, size = 2, label.size = 0.1,
              label = paste("R² =",  rsq, "\nRMSE =", rmse)) +
   geom_abline() +
+  scale_x_continuous(breaks = c(-3, -2, -1), labels = c("–3", "–2", "–1")) +
+  scale_y_continuous(breaks = c(-3, -2, -1), labels = c("–3", "–2", "–1")) +
   theme_pubr()  +
   theme(axis.title=element_text(size=7),
         axis.line = element_line(size = 0.1),
         axis.ticks = element_line(size = 0.1),
         axis.text = element_text(size = 6)) +
-  labs(x= bquote("Observed log"~CO[2]~ 'emision ('*mu~'g'~ h^-1~g^-1*')'~"rate") , y = bquote("Predicted log"~CO[2]~ 'emision ('*mu~'g'~ h^-1~g^-1*')'~"rate"))
+  labs(x= bquote("Observed log"~CO[2]~ 'emission rate ('*mu~'g'~ h^-1~g^-1*')') , y = bquote("Predicted log"~CO[2]~ 'emission rate ('*mu~'g'~ h^-1~g^-1*')'))
 px  
 ggsave("figures/Observed and predicted co2 emission.png", width = 4, height = 2.2, dpi = 600)
 ```
@@ -230,8 +243,8 @@ ggsave("figures/Observed and predicted co2 emission.png", width = 4, height = 2.
 
 ```{r}
 options(repr.plot.width = 8, repr.plot.height = 2)
-term_rename <- tibble(term = c("`Time (days)`", "`Depth (cm)`", "`Temperature (°C)`"),
-                      name_corrected = c("Time (days)", "Layer (cm)", "Temperature (°C)"))
+term_rename <- tibble(term = c("`Time (days)`", "`Depth (cm)`", "`Temperature (°C)`", "Sites_PF45"),
+                      name_corrected = c("Elapsed time", "Layer", "Temperature", "Management"))
 
 h <- broom::tidy(model_fit, conf.int = TRUE) |>
   dplyr::filter(term != "(Intercept)") |>
@@ -242,12 +255,13 @@ h <- broom::tidy(model_fit, conf.int = TRUE) |>
   geom_point() +
   geom_errorbarh(aes(xmin = conf.low, xmax = conf.high), height = 0.1,
                  size=0.5) +
+  scale_x_continuous(breaks = c(-0.6, -0.4, -0.2, 0.0, 0.2), labels = c("–0.6", "–0.4", "–0.2", "0.0", "0.2")) +
   labs(x = "Coefficient", y = "") +
   theme_light() +
   theme(axis.text=element_text(size=14),
-        axis.title=element_text(size=14))
+        axis.title=element_text(size=14)) # Time (d)
 h
-ggsave("figures/Linear-model-Co2.png", width = 8, height = 2, dpi = 600)
+ggsave("figures/Linear-model-Co2_with_site.png", width = 8, height = 2, dpi = 600)
 ```
 
 ### 7.3 Prediction model of CO2 emission in cranberry soils in three-layer positions (0-10 cm, 10-20 cm, 20-30 cm) and at three temperatures (10, 20 and 30oC).
@@ -256,25 +270,26 @@ ggsave("figures/Linear-model-Co2.png", width = 8, height = 2, dpi = 600)
 New.labs <- c("10°C", "20°C", "30°C") # Change labels 
 names(New.labs) <- c("10", "20", "30")
 
-New.labs_b <-  c("[0-10 cm]", "[10-20 cm]", "[20-30 cm]") # Change labels
+New.labs_b <-  c("[0–10 cm]", "[10–20 cm]", "[20–30 cm]") # Change labels
 names(New.labs_b) <- c("10", "20", "30")
 
 options(repr.plot.width = 8, repr.plot.height = 6)
 pl <- data_co2_clean |>
   bind_cols(10^prediction) |>
   ggplot(aes(x = `Time (days)`, y = `CO2 emission (ug/h/g)`)) +
+  geom_smooth(aes(x = `Time (days)`, y = `.pred`), color = "black", size = .5) +
   geom_point(size = 2, alpha = .3) +
   facet_grid(`Depth (cm)` ~ `Temperature (°C)`, scales = "free", labeller = labeller(`Depth (cm)` = New.labs_b, `Temperature (°C)` = New.labs)) +
-  geom_line(aes(x = `Time (days)`, y = `.pred`)) +
   scale_y_log10() +
   theme_bw() +
   theme(strip.text = element_text(size = 12), axis.text=element_text(size=12),
         axis.title=element_text(size=14),
         axis.title.y = element_text(size=14)) +
-  xlab("Incubation time (days)") + ylab(bquote(~CO[2]~ 'emision rate ('*mu~'g'~ h^-1~g^-1*')'))
+  xlab("Incubation time (d)") + ylab(bquote(~CO[2]~ 'emission rate ('*mu~'g'~ h^-1~g^-1*')'))
 pl
 ggsave("figures/CO2 emission.png", plot= pl, width = 7, height = 5, dpi = 600)
 ```
+
 
 ## 8. What is the temperature sensitivity across cranberry soil layers?
 
@@ -317,16 +332,18 @@ options(repr.plot.width = 12, repr.plot.height = 6)
 plot_co2 <- data_co2_clean %>%
   ggplot(aes(x = `1/T`, y = lnK)) +
   facet_grid(~`Depth (cm)`, labeller = labeller(`Depth (cm)` = New.labs_b)) +
-  geom_boxplot(aes(group = factor(`1/T`))) +
+  geom_boxplot(aes(group = factor(`1/T`)), outlier.shape = NA) +
   stat_regline_equation(aes(label =  paste(..eq.label.., ..rr.label.., sep = "~~")), label.x = 0.00331, label.y = -7) +
   geom_abline(data = linmod_coef, aes(intercept = Intercept, slope = Slope), lwd = 1) +
-  labs(y = "ln(K)") +
+  scale_y_continuous(breaks = c(-12, -10, -8), labels = c("–12", "–10", "–8")) +
+  labs(y = bquote("log(k)" ~d^-1)) +
   theme_bw() +
   theme(strip.text = element_text(size = 14), axis.text=element_text(size=14),
         axis.title=element_text(size=14)) 
 plot_co2
 ggsave("figures/Arrhénius équation.png", plot = plot_co2, width = 8, height = 4, dpi = 600)# export plot high resolution
 ```
+
 
 ### 8.2 Activation Energy computation
 
@@ -388,17 +405,19 @@ stat_Q10
 ```
 
 ```{r}
-New.labs_c <- c("[10°C - 20°C]", "[20°C - 30°C]") # Change labels 
+New.labs_c <- c("[10°C–20°C]", "[20°C–30°C]") # Change labels 
 names(New.labs_c) <- c("Q_20_10", "Q_30_20")
 
 options(repr.plot.width = 8, repr.plot.height = 4)
-data_Q10 |> 
+ data_Q10 |> 
   mutate(`Layers` = as.character(`Depth (cm)`)) |>
   ggplot(aes(x = `Time (days)`, y = `Q10`)) +
-  facet_grid(`Temperature range`~`Depth (cm)`, labeller = labeller(`Depth (cm)` = New.labs_b,
-                                                                   `Temperature range` = New.labs_c)) +
+  facet_grid(`Temperature range`~`Depth (cm)`, 
+             labeller = labeller(`Depth (cm)` = New.labs_b,
+                                 `Temperature range` = New.labs_c)) +
   geom_smooth(method = "lm", se = TRUE, color = "Black") +
   geom_point(size = 1.5, alpha = 0.6) +
+  labs(x = "Time(d)", y = bquote(Q[10])) +
   theme_bw() + 
   theme(strip.text = element_text(size = 14), axis.text=element_text(size=14),
         axis.title=element_text(size=14)) 
@@ -437,24 +456,29 @@ get_summary_stats(`C:N ratio`)
 ```
 
 ```{r}
-
+library(viridis)
 plot_desc <- function(y, ylab){
-  New.labs_c <-  c("Site/A9", "Site/45") # Change labels
+  New.labs_c <-  c("Site A9", "Site 45") # Change labels
 names(New.labs_c) <- c("Belanger/ A9", "Fortier/ 45")
-  ggplot(data_carbon_credit, aes(`Layer (cm)`, y)) +
+  ggplot(data_carbon_credit, aes(`Layer (cm)`, y, color = `Layer (cm)`)) +
+    geom_boxplot(outlier.shape = NA) + 
 facet_grid( . ~ `Location`, scales = "free", labeller = labeller(`Location` = New.labs_c)) +
-geom_boxplot() + 
     theme_bw() +
+    scale_color_viridis_d(option = "G", begin = .1, end = .8) +
+    scale_x_discrete(labels = c("[0–10 cm]", "[10–20 cm]", "[20–30 cm]")) +
 theme(strip.text = element_text(size = 11), axis.text=element_text(size=11),
-        axis.title=element_text(size=11)) +
+      axis.text.x = element_text(size = 8),
+        axis.title=element_text(size=11), legend.position = "none") +
+    
     labs(y = ylab)
   }
 
-plot1 <- plot_desc(data_carbon_credit$`C stock (kg m-3)`, "C stock (kg m-3)")
+plot1 <- plot_desc(data_carbon_credit$`C stock (kg m-3)`, bquote("C stock (kg" ~m^-3~")"))
 plot2 <- plot_desc(data_carbon_credit$`C:N ratio`, "C:N ratio")
-plot3 <- plot_desc(data_carbon_credit$`Bulk density (kg m-3)`, "Bulk density (kg m-3)")
-plot4 <- plot_desc(data_carbon_credit$pHCaCl2, "pHCaCl2")
-plot5 <- plot_desc(data_carbon_credit$`Total porosity`, "Total porosity")
+plot3 <- plot_desc(data_carbon_credit$`Bulk density (kg m-3)`, # m-3
+                   "Bulk density (kg"~m^-3~")")
+plot4 <- plot_desc(data_carbon_credit$pHCaCl2, bquote(pHCaCl[2]))
+plot5 <- plot_desc(data_carbon_credit$`Total porosity`, "Total porosity (%)")
 plot6 <- plot_desc(data_carbon_credit$`Water content (%)`, "Water content (%)")
 
 options(repr.plot.width = 8, repr.plot.height = 6)
@@ -462,7 +486,7 @@ figure <- ggarrange(plot1, plot2, plot3, plot4, plot5, plot6,
                     labels = c("A", "B", "C", "D", "E", "F"), label.x = 0.05, label.y = 1.01,
                     ncol = 2, nrow = 3)
 figure
-ggsave("figures/Soil description.png", width = 8, height = 5, dpi = 600)# export plot high resolution
+ggsave("figures/Soil description.png", width = 9, height = 6, dpi = 600)# export plot high resolution
 ```
 
 ## 9.2 C:N ratio in alternate sublayers of sand and organic matter
