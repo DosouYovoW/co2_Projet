@@ -1,0 +1,104 @@
+Nonlinear mixed-effects model fit by the SAEM algorithm
+-----------------------------------
+----          Data             ----
+-----------------------------------
+Object of class SaemixData
+    longitudinal data for use with the SAEM algorithm
+Dataset DATA_JOIN 
+    Structured data: ug_C_CO2_h_g ~ temps_jr | PROFONDEUR 
+    Predictor: temps_jr () 
+Dataset characteristics:
+    number of subjects:     3 
+    number of observations: 611 
+    average/min/max nb obs: 203.67  /  182  /  216 
+First 10 lines of data:
+   PROFONDEUR temps_jr ug_C_CO2_h_g mdv cens occ ytype
+1          20        7  0.029853008   0    0   1     1
+2          30        7  0.016309585   0    0   1     1
+3          10        7  0.463173680   0    0   1     1
+4          20        7  0.028695799   0    0   1     1
+5          30        7  0.003094931   0    0   1     1
+6          10        7  0.046279241   0    0   1     1
+7          20        7  0.034723263   0    0   1     1
+8          30        7  0.008240409   0    0   1     1
+9          10        7  0.505264180   0    0   1     1
+10         20        7  0.006164793   0    0   1     1
+-----------------------------------
+----          Model            ----
+-----------------------------------
+Nonlinear mixed-effects model
+  Model function
+function(psi,id,x) { 
+  D   <- 320
+  t   <-x[,1] 
+  ka  <-psi[id,1]
+  V   <-psi[id,2]
+  ke  <-psi[id,3]
+  fpred <-D*ka/(V*(ka-ke))*(exp(-ke*t)-exp(-ka*t))
+  return(fpred)
+}
+<bytecode: 0x000000006a690be8>
+  Nb of parameters: 3 
+      parameter names:  ka V ke 
+      distribution:
+     Parameter Distribution Estimated
+[1,] ka        normal       Estimated
+[2,] V         normal       Estimated
+[3,] ke        normal       Estimated
+  Variance-covariance matrix:
+   ka V ke
+ka  1 0  0
+V   0 1  0
+ke  0 0  1
+  Error model: constant , initial values: a.=1 
+    No covariate in the model.
+    Initial values
+             ka  V  ke
+Pop.CondInit  1 20 0.5
+-----------------------------------
+----    Key algorithm options  ----
+-----------------------------------
+    Estimation of individual parameters (MAP)
+    Estimation of standard errors and linearised log-likelihood
+    Number of iterations:  K1=300, K2=100 
+    Number of chains:  17 
+    Seed:  632545 
+    Simulations:
+        nb of simulated datasets used for npde:  1000 
+        nb of simulated datasets used for VPC:  100 
+    Input/output
+        save the results to a file:  TRUE 
+        save the graphs to files:  TRUE 
+        directory where results should be saved:  newdir 
+----------------------------------------------------
+----                  Results                   ----
+----------------------------------------------------
+-----------------  Fixed effects  ------------------
+----------------------------------------------------
+     Parameter Estimate SE      CV(%) 
+[1,] ka         0.015   7.2e-03   48.6
+[2,] V         19.505   6.0e+02 3078.1
+[3,] ke         1.903   5.8e+01 3039.4
+[4,] a.         0.097   2.8e-03    2.9
+----------------------------------------------------
+-----------  Variance of random effects  -----------
+----------------------------------------------------
+   Parameter Estimate SE      CV(%) 
+ka omega2.ka 2.3e-05  4.0e-05    172
+V  omega2.V  1.4e+00  1.6e+03 108585
+ke omega2.ke 2.2e-02  1.4e+01  67037
+----------------------------------------------------
+------  Correlation matrix of random effects  ------
+----------------------------------------------------
+          omega2.ka omega2.V omega2.ke
+omega2.ka 1         0        0        
+omega2.V  0         1        0        
+omega2.ke 0         0        1        
+----------------------------------------------------
+---------------  Statistical criteria  -------------
+----------------------------------------------------
+Likelihood computed by linearisation
+      -2LL= -Inf 
+      AIC = -Inf 
+      BIC = -Inf 
+----------------------------------------------------
