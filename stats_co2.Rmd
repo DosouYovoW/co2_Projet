@@ -3,12 +3,14 @@ title: "CO2 emissions in layered cranberry soils under simulated warming"
 author: "Wilfried Dossou-Yovo, Ph.D."
 date: "13/02/2022"
 output:
+  html_document: 
+    toc: yes
+    number_sections: yes
   pdf_document: 
     toc: yes
     number_sections: yes
     latex_engine: lualatex
     fig_caption: yes
-  html_document: default
   word_document: default
 ---
 
