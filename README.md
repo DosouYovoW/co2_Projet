@@ -14,4 +14,5 @@ the 10–30 cm (2.79 ± 0.10) than the 0–10 cm (2.18 ± 0.07) sublayers. The 2
 less total carbon was stored was the most sensitive to higher temperature. Cranberry soils could be
 used as sensitive markers of global warming.     
 **Keywords:** carbon accumulation; cranberry soils; activation energy; temperature-dependent CO2
-emissions rate
+emissions rate   
+**Link:** https://www.mdpi.com/2571-8789/7/1/3
