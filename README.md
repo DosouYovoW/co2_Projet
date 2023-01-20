@@ -12,6 +12,6 @@ the 0–10, 10–20 and 20–30 cm sublayers, respectively, indicating higher mo
 resisting to decomposition in deeper sublayers. The Q10 values were significantly higher (p < 0.01) in
 the 10–30 cm (2.79 ± 0.10) than the 0–10 cm (2.18 ± 0.07) sublayers. The 20–30 cm sublayer where
 less total carbon was stored was the most sensitive to higher temperature. Cranberry soils could be
-used as sensitive markers of global warming.
-Keywords: carbon accumulation; cranberry soils; activation energy; temperature-dependent CO2
+used as sensitive markers of global warming.     
+**Keywords:** carbon accumulation; cranberry soils; activation energy; temperature-dependent CO2
 emissions rate
